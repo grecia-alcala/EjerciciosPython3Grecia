@@ -1,7 +1,6 @@
 import pickle
 from pickle import Pickler
 
-
 class Estudiante():
 
     def __init__(self):
@@ -28,31 +27,24 @@ class Estudiante():
 
 
 def Guardar():
+
     mostrar = Estudiante()
-    ips = []
+    data = ["Nombre: ", mostrar.nombre(),"Apellido: ", mostrar.apellido(),"Numero de estudiante: ", mostrar.numero(),"Correo: ", mostrar.correo(),"Grupo: ", mostrar.grupo()]
 
-    for i in ips:
-        print(i)
+    #fichero = open('Estudiantes.pickle')
+    #fichero.write(data)
+    #fichero.close()
 
-    bin = pickle.dumps(ips)
-    print(bin)
-
-    file = open('Estudiante.txt', 'wb')
-    p = Pickler(file)
-    p.dump(mostrar.nombre()), p.dump(mostrar.apellido())
-    p.dump(mostrar.numero()), p.dump(mostrar.correo()), p.dump(mostrar.grupo())
-    file.close()
+    with open('Estudiantes.pickle', 'wb') as f:
+        pickle.dump(data, f)
+    f.close()
 
 
 def Mostrar():
-    mostrar = Estudiante()
 
-    print('Mi nombre es ', mostrar.nombre())
-    print('Mi apellido es ', mostrar.apellido())
-    print('Mi numero de estudiante es ', mostrar.numero())
-    print('Mi correo es ', mostrar.correo())
-    print('Mi grupo es ', mostrar.grupo())
-
+    with open("Estudiantes.pickle", "rb") as f:
+        print(pickle.load(f))
+    f.close()
 
 def Modificar():
     pass
@@ -61,6 +53,7 @@ def OPC():
     print("1-Ingresar estudiante")
     print("2-Mostrar estudiantes")
     print("3-Modificar")
+    print("4-Salir")
     i = int(input("Ingresar opcion: "))
 
     if i == 1:
@@ -69,7 +62,11 @@ def OPC():
     elif i == 2:
         Mostrar()
         return OPC()
+    elif i == 3:
+        Modificar()
+        return OPC()
     else:
         pass
 
 OPC()
+
